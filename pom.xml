@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!--构建：编译 打包 部署等...
+        坐标：唯一确定一个组件，坐标由三个部分组成
+            groupId：项目组织名称。哪个组织开发的
+            artifactId：具体项目名称
+            version：项目版本
+
+            SNAPSHOT:快照版（不稳定版本）
+            beta: 公测版
+            GA: 推荐（稳定版）
+            release: 稳定版
+    -->
+    <groupId>com.qcj.maven</groupId>
+    <artifactId>maven_GH01</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--配置常量：properties
+        在底下使用方式：${project.build.sourceEncoding}
+        -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--修改jdk版本-->
+        <java.version>1.8</java.version>
+    </properties>
+
+    <!--依赖管理-->
+    <dependencies>
+        <!--Junit依赖-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <!--作用域：scope  作用范围
+                compile（默认）任何时候有效
+                test  仅对测试有效
+                provided 编译时有效，运行时无效
+                runtime  运行时有效
+依赖范围      对主代码classpath有效  对测试代码classpath有效       被打包，对于运行时classpath有效    例子
+compile         Y                        Y                                  Y                        log4J
+test            -                        Y                                  -                        junit
+provided        Y                        Y                                  -                        servlet-api(运行的时候不需要，容器中有)
+runtime         -                        -                                  Y                        JDBC Driver(反射)/Implementation
+            -->
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!--构建配置：修改打包名称-->
+    <build>
+        <finalName>HelloWorld</finalName>
+        <plugins>
+            <plugin>
+                <!-- 配置插件 -->
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <!--tomcat配置-->
+                <configuration>
+                    <port>8080</port>
+                    <path>/ssm</path>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+</project>
